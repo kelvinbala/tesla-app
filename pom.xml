@@ -96,7 +96,7 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>Landmark Technologies Releases Nexus Repository</name>
-	      <url>http://3.80.74.148:8081/repository/google-releasee/</url> 
+	      <url>http://52.55.81.71:8081/repository/Honda-Release/</url> 
 	    </repository>
 	    
 	    <snapshotRepository>
