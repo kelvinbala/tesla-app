@@ -1,0 +1,43 @@
+pipeline{
+    agent any
+    tools {
+        maven "Maven3.8.6"
+    }
+    stages{
+        stage('GetCode'){
+            steps{
+                git branch: 'stage', changelog: false, credentialsId: 'Github', url: 'https://github.com/kelvinbala/tesla-app.git'
+            }
+        }
+        stage('BuildArtifact'){
+            steps{
+                sh "mvn clean package"
+            }
+        }
+        stage('UploadNeexus'){
+            /*when{
+                expression{
+                    ${env.BRANCH_NAME} == 'master'
+                }
+            }*/
+            steps{
+                sh "mvn deploy"
+            }
+        }
+        stage('Production'){
+            steps{
+                deploy adapters: [tomcat9(credentialsId: 'tomcat_credential', path: '', url: 'http://18.207.227.151:8080/')], contextPath: null, war: 'target/*war'
+            }
+        }
+    }
+    post{
+        always{
+            echo "Pipeline completed"
+        
+        }
+    }
+    
+    
+    
+    
+}
